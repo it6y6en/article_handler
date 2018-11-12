@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
-use Request;
 use App\Article;
 use Carbon\Carbon;
+use App\Http\Requests\CreateArticleRequest;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 
 class ArticlesController extends Controller
 {
@@ -20,10 +21,6 @@ class ArticlesController extends Controller
     {
 
         $article = Article::findOrFail($id);
-        //dd($article->published_at);
-        // if( is_null($article) ) {
-        //     abort(404);
-        // }
         return view('articles.show', compact('article'));
 
     }
@@ -33,17 +30,10 @@ class ArticlesController extends Controller
         return view('articles.create');
     }
 
-    public function store()
+    public function store(CreateArticleRequest $request)
     {
-        $input = Request::all();
-//        $input['published_at'] = Carbon::now();
-        $article = new Article;
-        $article->title = $input['title'];
-        $article->body = $input['body'];
-        $article->published_at = $input['published_at'];
-        $article->save();
-//      Article::forceCreate(Request::all());
-        return redirect('articles');
+        Article::forceCreate($request->except(['_token']));
 
+        return redirect('articles');
     }
 }

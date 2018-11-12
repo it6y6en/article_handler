@@ -18,5 +18,7 @@
             </div>
         </article>
     @endforeach
+        <hr/>
+        <h3><a href="{{ action('ArticlesController@create') }}">Create New</a></h3>
 
 @endsection
