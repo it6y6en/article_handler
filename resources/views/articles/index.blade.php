@@ -10,6 +10,9 @@
             <h2>
                 <!-- <a href="{{ action('ArticlesController@show', [$article->id]) }}">{{$article->title}}</a><br> -->
                 <a href="{{ url('/articles', $article->id) }}">{{$article->title}}</a>
+                <h5>by: {{ $article->user->name }}</h5>
+                <h6><span><a href="{{ action('ArticlesController@edit', $article->id) }}">Edit</a></span></h6>
+
             </h2>
 
             <div class="body">

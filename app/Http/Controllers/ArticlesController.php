@@ -32,7 +32,10 @@ class ArticlesController extends Controller
 
     public function store(ArticleRequest $request)
     {
-        Article::forceCreate($request->except(['_token']));
+        //Article::forceCreate($request->except(['_token']));
+        $article = new Article();
+        $article->forceFill($request->except(['_token']));
+        \Auth::user()->articles()->save($article);
         return redirect('articles');
     }
 

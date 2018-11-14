@@ -25,3 +25,12 @@ Route::get('/about', 'PagesController@about');
 // Route::get('/articles/{id}/edit', 'ArticlesController@edit');
 
 Route::resource('articles', 'ArticlesController');
+
+// Route::controller([
+//     'auth'      => 'Auth\AuthController',
+//     'password'  => 'Auth\PasswordController',
+// ]);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
