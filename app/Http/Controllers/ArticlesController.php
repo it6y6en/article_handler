@@ -9,10 +9,19 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 //use Request;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
+/**
+ * [ArticlesController description]
+ */
 class ArticlesController extends Controller
 {
-    //
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => 'index']);
+    }
+
     public function index()
     {
         $articles = Article::latest('published_at')->published()->get();
@@ -27,6 +36,9 @@ class ArticlesController extends Controller
 
     public function create()
     {
+        if(Auth::guest()){
+            return redirect('articles');
+        }
         return view('articles.create');
     }
 
@@ -51,4 +63,5 @@ class ArticlesController extends Controller
         $article->forceFill($request->except(['_token','_method']))->save();
         return redirect('articles');
     }
+
 }

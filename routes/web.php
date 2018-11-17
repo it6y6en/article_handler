@@ -15,15 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/about', 'PagesController@about');
+Route::get('/about', ['middleware' => 'auth', 'users' => 'PagesController@about']);
 
+Route::get('/contact', ['middleware' => 'auth', function()
+{
+    return 'This page shown only for singed users';
+}]);
 
 // Route::get('/articles', 'ArticlesController@index');
 // Route::get('/articles/create', 'ArticlesController@create');
 // Route::get('/articles/{id}', 'ArticlesController@show');
 // Route::post('/articles', 'ArticlesController@store');
 // Route::get('/articles/{id}/edit', 'ArticlesController@edit');
-
 Route::resource('articles', 'ArticlesController');
 
 // Route::controller([
@@ -34,3 +37,8 @@ Route::resource('articles', 'ArticlesController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/foo', ['middleware' => 'manager', function()
+{
+    return 'only manager can see it';
+}]);
