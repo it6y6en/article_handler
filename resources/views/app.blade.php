@@ -8,13 +8,15 @@
 
 </head>
 <body>
-  <div class="container">
+	<div class="container">
 
-    @yield('content')
+		@include('partials\flash')
 
-  </div>
+		@yield('content')
 
-  @yield('footer')
+	</div>
+
+	@yield('footer')
 
 </body>
 </html>
