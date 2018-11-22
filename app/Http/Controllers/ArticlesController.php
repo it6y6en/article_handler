@@ -26,6 +26,7 @@ class ArticlesController extends Controller
     public function index()
     {
         $articles = Article::latest('published_at')->published()->get();
+        // $latest = Article::latest()->first();
         return view('articles.index', compact('articles'));
     }
 
@@ -41,7 +42,8 @@ class ArticlesController extends Controller
         }
 
         $tags = Tag::pluck('name', 'id');
-        return view('articles.create', compact('tags'));
+        $tagarray = array();
+        return view('articles.create', compact('tags', 'tagarray'));
     }
 
     public function store(ArticleRequest $request)
@@ -49,7 +51,7 @@ class ArticlesController extends Controller
         //Article::forceCreate($request->except(['_token']));
 
         $article = new Article();
-        $article->forceFill($request->except(['_token','tags']));
+        $article->forceFill($request->except(['_token','tag_list']));
         Auth::user()->articles()->save($article);
 
         //dd($request->input('tags'));
@@ -75,7 +77,7 @@ class ArticlesController extends Controller
     public function update(Article $article, ArticleRequest $request)
     {
         $article->forceFill($request->except(['_token','_method','tag_list']))->save();
-        $article->tags()->attach($request->input('tag_list'));
+        $article->tags()->sync($request->input('tag_list'));
         return redirect('articles');
     }
 

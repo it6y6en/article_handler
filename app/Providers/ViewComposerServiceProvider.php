@@ -3,25 +3,25 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 use App\Article;
 
-class AppServiceProvider extends ServiceProvider
+class ViewComposerServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      *
      * @return void
      */
     public function boot()
     {
-        //
-        Schema::defaultStringLength(191);
-
+        view()->composer('partials.nav', function($view)
+        {
+            $view->with('latest', Article::latest()->first());
+        });
     }
 
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */
