@@ -10,9 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Interface BarInterface{}
+
+Class Bar implements BarInterface{}
+
+App::bind('BarInterface', 'Bar');
+
+Route::get('bar', function(BarInterface $bar){
+    dd($bar);
+});
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+
+    //return view('welcome');
 });
 
 Route::get('/about', ['middleware' => 'auth', 'users' => 'PagesController@about']);

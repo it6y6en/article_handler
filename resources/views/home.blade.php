@@ -15,6 +15,7 @@
                     @endif
 
                     You are logged in!
+                    <h2><a href="{{ url('/articles') }}">Articles</a></h2>
                 </div>
             </div>
         </div>
